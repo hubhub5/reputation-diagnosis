@@ -1,7 +1,8 @@
+import { box } from './trial.js';
 // 이 기기에서만 쓰는 작은 상태: 진행 중인 응답, 마지막 진단 ID
-const get = (k, d) => { try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : d; } catch (e) { return d; } };
-const set = (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) { /* 무시 */ } };
-const del = (k) => { try { localStorage.removeItem(k); } catch (e) { /* 무시 */ } };
+const get = (k, d) => { try { const v = box.getItem(k); return v ? JSON.parse(v) : d; } catch (e) { return d; } };
+const set = (k, v) => { try { box.setItem(k, JSON.stringify(v)); } catch (e) { /* 무시 */ } };
+const del = (k) => { try { box.removeItem(k); } catch (e) { /* 무시 */ } };
 
 export const draft = {
   load: () => get('rdt.draft.v2', null),

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { api } from '../lib/api.js';
+import { TRIAL } from '../lib/trial.js';
 import { lastId } from '../lib/store.js';
 import { roleById } from '../lib/score.js';
 import { ATN_ITEMS, LIKERT } from '../data/test.js';
@@ -32,7 +33,7 @@ export function PeerHub() {
       </div>
       <div className="btns mt24">
         {id ? <Link className="btn" to={`/peer/new/${id}`}>{id} 진단으로 요청하기</Link> : <Link className="btn" to="/test">먼저 진단하기</Link>}
-        <Link className="btn ghost" to="/me">내 진단함에서 고르기</Link>
+        {!TRIAL && <Link className="btn ghost" to="/me">내 진단함에서 고르기</Link>}
       </div>
       <p className="disclaimer">응답자를 식별할 수 있는 정보는 요청자에게 보여 주지 않는다. 평균은 3명 이상일 때만 보인다(데모에서는 1명부터 표시).</p>
     </main>

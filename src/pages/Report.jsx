@@ -3,6 +3,7 @@ import { useParams, Link, Navigate } from 'react-router-dom';
 import { api } from '../lib/api.js';
 import { compute, peerAtn, roadmapTasks, PATTERNS } from '../lib/score.js';
 import { unlocked } from '../lib/store.js';
+import { TRIAL } from '../lib/trial.js';
 import { ATN_ITEMS, REQ_STATES, DISTORTIONS } from '../data/test.js';
 import { Px, Cells, Sec, Loading, Empty, fmtDate } from '../components/ui.jsx';
 import { AtnTriple } from './Result.jsx';
@@ -22,7 +23,7 @@ export default function Report() {
 
   if (r === undefined) return <main className="wrap page"><Loading /></main>;
   if (!r) return <main className="wrap page"><Empty>리포트 {id}을 찾지 못했다.</Empty></main>;
-  if (!r.reportSentAt && !unlocked.has(id) && !api.adminAuthed()) return <Navigate to={`/result/${id}`} replace />;
+  if (!TRIAL && !r.reportSentAt && !unlocked.has(id) && !api.adminAuthed()) return <Navigate to={`/result/${id}`} replace />;
 
   const c = compute(r);
   const peer = peerAtn(inv);

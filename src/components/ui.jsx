@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link, NavLink, useLocation } from 'react-router-dom';
+import { TRIAL } from '../lib/trial.js';
 
 const BASE = import.meta.env.BASE_URL;
 
@@ -43,6 +44,7 @@ export function Top() {
   };
   return (
     <header className="top">
+      {TRIAL && <div className="trial-bar mono">체험판 · 로그인 없이 쓰고, 입력한 내용은 이 탭을 닫으면 모두 사라진다</div>}
       <div className="top-in">
         <Link className="brand" to="/"><b>평판진단</b><small className="mono">ATN · rev 3</small></Link>
         <nav className={'nav' + (open ? ' open' : '')}>
@@ -54,7 +56,7 @@ export function Top() {
           <NavLink to="/about" className={({ isActive }) => (isActive ? 'on' : '')}>ATN 모형</NavLink>
         </nav>
         <div className="top-tools">
-          <Link className="btn sm ghost" to="/me">내 진단함</Link>
+          {!TRIAL && <Link className="btn sm ghost" to="/me">내 진단함</Link>}
           <button className="menu-btn" type="button" onClick={() => setOpen(!open)} aria-expanded={open}>메뉴</button>
           <button className="theme-btn" type="button" onClick={toggle} aria-label="밝기 전환">◐</button>
         </div>
@@ -71,7 +73,7 @@ export function Foot() {
           <Link to="/about">ATN 평판설계모형</Link>
           <Link to="/services">상담·프로그램</Link>
           <Link to="/privacy">개인정보·진단의 한계</Link>
-          <Link to="/admin">관리자</Link>
+          {!TRIAL && <Link to="/admin">관리자</Link>}
         </nav>
         <p>평판진단테스트는 사람을 등급으로 나누는 검사가 아니다. 자기 응답만으로 실제 평판을 확정하지 않으며, 중요한 판단에는 전문가 검토를 둔다.</p>
         <p className="mono">© 2026 평판진단 · 문항 v0.3 (파일럿) · 『우리는 결국 이름으로 일한다』</p>

@@ -333,3 +333,6 @@ select.inp { width: auto; }
 input[type='range'] { accent-color: var(--ink); width: 100%; }
 @media (max-width: 560px) { .info .row span[style*='120px'] { grid-template-columns: 1fr 44px !important; } .info .row span[style*='120px'] > span:first-child { grid-column: 1 / -1; } }
 .builder .out span.empty { font-size: .72em; }
+
+/* 체험판 안내 줄 */
+.trial-bar { background: var(--accent); color: #1a1a1a; font-size: 11px; text-align: center; padding: 5px 16px; letter-spacing: 0; }

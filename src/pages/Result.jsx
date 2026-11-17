@@ -3,6 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import { api } from '../lib/api.js';
 import { compute, level } from '../lib/score.js';
 import { unlocked } from '../lib/store.js';
+import { TRIAL } from '../lib/trial.js';
 import { Px, Cells, Sec, Loading, Empty, fmtDate, fmtDur } from '../components/ui.jsx';
 
 export function AtnTriple({ atn, peer }) {
@@ -40,7 +41,7 @@ export default function Result() {
   if (!r) return <main className="wrap page"><Empty>진단 기록 {id}을 찾지 못했다. <Link className="link" to="/test">새로 진단하기</Link></Empty></main>;
 
   const c = compute(r);
-  const open = !!r.reportSentAt || unlocked.has(id) || !!mail;
+  const open = TRIAL || !!r.reportSentAt || unlocked.has(id) || !!mail;
 
   async function send(e) {
     e.preventDefault();
@@ -111,9 +112,9 @@ export default function Result() {
           <div className="sent">
             <Px name="envelope" />
             <div>
-              <p className="mono" style={{ color: 'var(--mute)' }}>SENT · {r.email}</p>
-              <h2 className="mt8">리포트를 보냈다</h2>
-              <p className="mt8" style={{ color: 'var(--ink-2)', fontSize: 14 }}>메일이 오지 않으면 스팸함을 확인한다. 같은 내용을 여기서 바로 열 수 있다.</p>
+              <p className="mono" style={{ color: 'var(--mute)' }}>{TRIAL ? 'TRIAL · 메일 없이 열람' : `SENT · ${r.email}`}</p>
+              <h2 className="mt8">{TRIAL ? '전체 리포트가 준비됐다' : '리포트를 보냈다'}</h2>
+              <p className="mt8" style={{ color: 'var(--ink-2)', fontSize: 14 }}>{TRIAL ? '체험판에서는 이메일을 받지 않고 바로 연다. 탭을 닫으면 리포트도 사라지니 필요하면 PDF로 저장한다.' : '메일이 오지 않으면 스팸함을 확인한다. 같은 내용을 여기서 바로 열 수 있다.'}</p>
             </div>
           </div>
           <div className="fields">

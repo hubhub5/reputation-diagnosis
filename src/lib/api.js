@@ -1,6 +1,7 @@
 // mock API. 모든 화면은 이 파일만 호출한다.
 // 지금은 localStorage에 저장하고 네트워크 지연을 흉내 낸다. 백엔드를 붙일 때 이 파일만 바꾼다.
 import { makeSeed } from '../data/seed.js';
+import { box } from './trial.js';
 
 const KEY = 'rdt.db.v2';
 const wait = (ms = 300 + Math.random() * 500) => new Promise((r) => setTimeout(r, ms));
@@ -8,7 +9,7 @@ const now = () => new Date().toISOString();
 
 function load() {
   try {
-    const raw = localStorage.getItem(KEY);
+    const raw = box.getItem(KEY);
     if (raw) return JSON.parse(raw);
   } catch (e) { /* 저장소 접근 불가 */ }
   const db = makeSeed();
@@ -19,7 +20,7 @@ let mem = null;
 function db() { return (mem ||= load()); }
 function save(d = mem) {
   mem = d;
-  try { localStorage.setItem(KEY, JSON.stringify(d)); } catch (e) { /* 메모리에만 유지 */ }
+  try { box.setItem(KEY, JSON.stringify(d)); } catch (e) { /* 메모리에만 유지 */ }
 }
 const nextId = (prefix) => {
   const d = db();
@@ -216,7 +217,7 @@ export const api = {
     return db().notes[rid];
   },
   async resetDemo() {
-    try { localStorage.removeItem(KEY); localStorage.removeItem('rdt.draft.v2'); } catch (e) { /* 무시 */ }
+    try { box.removeItem(KEY); box.removeItem('rdt.draft.v2'); } catch (e) { /* 무시 */ }
     mem = null;
     db();
   },

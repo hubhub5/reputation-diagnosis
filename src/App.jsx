@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
-import { Routes, Route, useLocation } from 'react-router-dom';
+import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
+import { TRIAL } from './lib/trial.js';
 import { Top, Foot } from './components/ui.jsx';
 import Home from './pages/Home.jsx';
 import About from './pages/About.jsx';
@@ -36,8 +37,8 @@ export default function App() {
         <Route path="/roadmap" element={<Roadmap />} />
         <Route path="/services" element={<Services />} />
         <Route path="/consult" element={<Consult />} />
-        <Route path="/me" element={<Me />} />
-        <Route path="/admin" element={<Admin />} />
+        <Route path="/me" element={TRIAL ? <Navigate to="/" replace /> : <Me />} />
+        <Route path="/admin" element={TRIAL ? <Navigate to="/" replace /> : <Admin />} />
         <Route path="/mail/:id" element={<Mail />} />
         <Route path="/privacy" element={<Privacy />} />
         <Route path="*" element={<Home />} />
