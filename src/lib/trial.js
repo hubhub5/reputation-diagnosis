@@ -10,3 +10,5 @@ function pick() {
   try { return TRIAL ? sessionStorage : localStorage; } catch (e) { return memory; }
 }
 export const box = pick();
+// 체험판은 고정폭 메타 글씨까지 모두 나눔스퀘어 네오, 자간 -70으로 통일한다 (app.css의 html.trial).
+if (TRIAL && typeof document !== 'undefined') document.documentElement.classList.add('trial');
